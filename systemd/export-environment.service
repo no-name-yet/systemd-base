@@ -1,0 +1,9 @@
+[Unit]
+Description=Copy environment from PID 1 to a well known location
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/export_environment.sh /etc/ci-container.environment
+
+[Install]
+WantedBy=multi-user.target
