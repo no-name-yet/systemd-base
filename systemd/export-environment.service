@@ -3,7 +3,7 @@ Description=Copy environment from PID 1 to a well known location
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/export_environment /etc/ci-container.environment
+ExecStart=/sbin/export_environment /etc/ci-container.environment
 
 [Install]
 WantedBy=multi-user.target
