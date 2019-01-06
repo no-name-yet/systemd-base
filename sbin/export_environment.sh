@@ -7,15 +7,13 @@
 #
 
 # An array of variables to be exported to $export_path
-INCLUDE_LIST=(
-    HOSTNAME JENKINS_URL JENKINS_SECRET STDCI_SLAVE_CONTAINER_NAME
-    JENKINS_AGENT_NAME CI_RUNTIME_UID CI_RUNTIME_UNAME JENKINS_AGENT_WORKDIR
-    CONTAINER_SLOTS container
-)
+INCLUDE_LIST=($(cat /etc/export_list ||:))
 
 main() {
     local export_path="${1:?}"
     local include
+
+    [[ ${#INCLUDE_LIST[@]} -eq 0 ]] && return
 
     include=$(join "${INCLUDE_LIST[@]}")
     /usr/bin/tr \\000 \\n < /proc/1/environ |
