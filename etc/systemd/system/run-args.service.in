@@ -1,0 +1,14 @@
+[Unit]
+Description=Run container command
+
+[Service]
+Type=oneshot
+PassEnvironment=ARGS_EXPORT_PATH $ARGS_ENV_INCLUDE
+# Remove this service file so that if the container layer is committed, the
+# resulting image will not contain the given command information
+ExecStartPre=-/usr/bin/systemctl disable --no-reload run-args.service
+ExecStartPre=-/usr/bin/rm -f /etc/systemd/system/run-args.service
+ExecStart=/sbin/run_args.sh ${ARGS_EXPORT_PATH}
+
+[Install]
+WantedBy=multi-user.target
